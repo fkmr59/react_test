@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  react:
+    build:
+      context: ./my-react-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./my-react-app:/app
+      - /app/node_modules # node_modules を上書きしないように
+    environment:
+      - CHOKIDAR_USEPOLLING=true # Mac対応のため（ホットリロード）
