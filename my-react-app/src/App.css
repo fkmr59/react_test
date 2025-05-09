@@ -1,4 +1,4 @@
-.App {
+/*.App {
   text-align: center;
 }
 
@@ -35,4 +35,20 @@
   to {
     transform: rotate(360deg);
   }
+}*/
+
+/* src/App.css */
+.square {
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  text-align: center;
+  line-height: 50px;
+  border: 1px solid #999;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.board-row {
+  display: flex;
 }
