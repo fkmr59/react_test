@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Board from './Board';
-import History from './History';  // ここでインポート
+import History from './History';
 import './App.css';
 
 function App() {
