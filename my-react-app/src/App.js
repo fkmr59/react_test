@@ -1,31 +1,32 @@
-// src/App.js
 import React, { useState } from 'react';
 import Board from './Board';
+import History from './History';  // ここでインポート
 import './App.css';
 
 function App() {
-  const [squares, setSquares] = useState(Array(25).fill(null));
+  // ここに必要なstateなど
+  const [history, setHistory] = useState([Array(25).fill(null)]);
+  const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
-  const [history, setHistory] = useState([]);
 
+  // ゲームの進行に関するロジック（例：クリックされた場所に記号を入れる）
   const handleClick = (i) => {
-    const squaresCopy = squares.slice();
-    if (calculateWinner(squaresCopy) || squaresCopy[i]) return;
-    squaresCopy[i] = xIsNext ? 'X' : 'O';
-    setSquares(squaresCopy);
-    setXIsNext(!xIsNext);
-    setHistory([...history, squaresCopy]);
+    // ゲームの進行ロジック
   };
 
-  const calculateWinner = (squares) => {
-    // 五目並べの勝利判定ロジックをここに実装
-    return null;
+  // ジャンプ（履歴から戻る）
+  const jumpTo = (move) => {
+    // 履歴に戻るロジック
   };
 
   return (
     <div className="game">
-      <Board squares={squares} onClick={handleClick} />
-      {/* 履歴表示などのコンポーネントを追加 */}
+      <div className="game-board">
+        <Board squares={history[stepNumber]} onClick={handleClick} />
+      </div>
+      <div className="game-info">
+        <History history={history} jumpTo={jumpTo} /> {/* ここで履歴を表示 */}
+      </div>
     </div>
   );
 }
