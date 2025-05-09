@@ -7,16 +7,10 @@ function History({ history, jumpTo }) {
       <h3>履歴</h3>
       <ul>
         {history.map((step, move) => (
-          <li key={move}>
+          <li key={`${move}-${step.someUniqueProperty || move}`}>
             <button
               type="button"
-              onClick={() => {
-                if (typeof jumpTo === 'function') {
-                  jumpTo(move);
-                } else {
-                  console.error('jumpTo is not a function');
-                }
-              }}
+              onClick={() => jumpTo(move)}
             >
               手 {move}
             </button>
