@@ -8,7 +8,18 @@ function History({ history, jumpTo }) {
       <ul>
         {history.map((step, move) => (
           <li key={move}>
-            <button onClick={() => jumpTo(move)}>手 {move}</button>
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof jumpTo === 'function') {
+                  jumpTo(move);
+                } else {
+                  console.error('jumpTo is not a function');
+                }
+              }}
+            >
+              手 {move}
+            </button>
           </li>
         ))}
       </ul>
