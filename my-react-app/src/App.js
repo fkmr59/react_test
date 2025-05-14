@@ -1,31 +1,47 @@
 // src/App.js
 import React, { useState } from 'react';
 import Board from './Board';
+import History from './History';
 import './App.css';
 
 function App() {
-  const [squares, setSquares] = useState(Array(25).fill(null));
+  const [history, setHistory] = useState([Array(25).fill(null)]);
+  const [stepNumber, setStepNumber] = useState(0);
   const [xIsNext, setXIsNext] = useState(true);
-  const [history, setHistory] = useState([]);
 
   const handleClick = (i) => {
-    const squaresCopy = squares.slice();
-    if (calculateWinner(squaresCopy) || squaresCopy[i]) return;
-    squaresCopy[i] = xIsNext ? 'X' : 'O';
-    setSquares(squaresCopy);
+    const newHistory = history.slice(0, stepNumber + 1);
+    const current = newHistory[newHistory.length - 1];
+    const squares = current.slice();
+
+    if (calculateWinner(squares) || squares[i]) return;
+
+    squares[i] = xIsNext ? 'X' : 'O';
+    setHistory([...newHistory, squares]);
+    setStepNumber(newHistory.length);
     setXIsNext(!xIsNext);
-    setHistory([...history, squaresCopy]);
+  };
+
+  const jumpTo = (step) => {
+    setStepNumber(step);
+    setXIsNext(step % 2 === 0);
   };
 
   const calculateWinner = (squares) => {
-    // 五目並べの勝利判定ロジックをここに実装
+    // 勝利判定ロジック（仮で常にnullを返す）
     return null;
   };
 
+  const currentSquares = history[stepNumber];
+
   return (
     <div className="game">
-      <Board squares={squares} onClick={handleClick} />
-      {/* 履歴表示などのコンポーネントを追加 */}
+      <div className="game-board">
+        <Board squares={currentSquares} onClick={handleClick} />
+      </div>
+      <div className="game-info">
+        <History history={history} jumpTo={jumpTo} />
+      </div>
     </div>
   );
 }
